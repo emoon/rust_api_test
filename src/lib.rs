@@ -56,8 +56,9 @@ impl prodbg::Backend for MyBackend {
     //fn update(&mut self, reader: &prodbg::Reader)
     fn update(&mut self)
     {
+        println!("update instance! {}", self.some_data);
         //reader.read_u8();
-        self.some_data = 0;
+        self.some_data += 1;
     }
 }
 
@@ -66,6 +67,7 @@ impl prodbg::Backend for MyBackend {
 
 fn call_create_instance() -> *mut ::libc::c_void {
     let instance = unsafe { transmute(Box::new(MyBackend::new())) };
+    println!("Lets create instance!");
     instance
 }
 
@@ -77,7 +79,6 @@ fn call_destroy_instance(ptr: *mut ::libc::c_void) {
 fn call_update_instance(ptr: *mut ::libc::c_void) { 
     let backend: &mut MyBackend = unsafe { &mut *(ptr as *mut MyBackend) };
     backend.update()
-    // update backend here
 }
 
 #[no_mangle]
@@ -90,3 +91,4 @@ pub static mut g_backend: prodbg::CBackendCallbacks = prodbg::CBackendCallbacks 
 #[test]
 fn it_works() {
 }
+
