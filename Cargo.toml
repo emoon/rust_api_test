@@ -3,5 +3,9 @@ name = "api_test"
 version = "0.1.0"
 authors = ["Daniel Collin <daniel@collin.com>"]
 
+[lib]
+crate-type = ["staticlib"]
+name = "api_test"
+
 [dependencies]
 libc = "0.1.10"
